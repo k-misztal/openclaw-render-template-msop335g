@@ -15,6 +15,8 @@ ENV ALPHACLAW_ROOT_DIR=/data
 
 RUN mkdir -p /data
 
+[ -d /data/brain/.git ] || git clone "$BRAIN_REPO_URL" /data/brain
+
 EXPOSE 3000
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
