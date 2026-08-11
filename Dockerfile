@@ -8,6 +8,8 @@ COPY package.json ./
 RUN npm install --omit=dev --prefer-online && npm cache clean --force
 
 COPY --from=oven/bun:1 /usr/local/bin/bun /usr/local/bin/bun
+ENV BUN_INSTALL=/usr/local/bun
+ENV PATH="/usr/local/bun/bin:${PATH}"
 RUN bun install -g github:garrytan/gbrain
 
 ENV PATH="/app/node_modules/.bin:$PATH"
