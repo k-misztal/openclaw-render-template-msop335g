@@ -5,10 +5,13 @@ set -e
 
 echo "Starting entrypoint.sh script..."
 
-if [ -n "$BRAIN_REPO_URL" ] && [ -n "$GITHUB_TOKEN" ] && [ ! -d /data/brain/.git ]; then
-  echo "Cloning brain repo..."
-  git clone "https://${GITHUB_TOKEN}@github.com/${BRAIN_REPO}.git" /data/brain \
-    || echo "Brain clone failed, continuing."
+if [ -d /data/brain/.git ]; then
+  echo "[brain] present"
+elif [ -z "$BRAIN_REPO_URL" ]; then
+  echo "[brain] SKIP: BRAIN_REPO_URL unset"
+else
+  echo "[brain] cloning $BRAIN_REPO_URL"
+  git clone "$BRAIN_REPO_URL" /data/brain && echo "[brain] ok" || echo "[brain] FAILED"
 fi
 
 exec "$@"
