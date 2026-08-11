@@ -15,7 +15,9 @@ ENV ALPHACLAW_ROOT_DIR=/data
 
 RUN mkdir -p /data
 
-[ -d /data/brain/.git ] || git clone "$BRAIN_REPO_URL" /data/brain
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 
 EXPOSE 3000
 
